@@ -1,10 +1,10 @@
 {
   "domain": "mazda",
+  "name": "Mazda Connected Services",
+  "codeowners": [],
+  "config_flow": true,
   "documentation": "https://www.home-assistant.io/integrations/mazda",
   "issue_tracker": "https://github.com/runDMCA/home-assistant-mazda/issues",
-  "codeowners": [],
-  "name": "Mazda Connected Services",
-  "version": "1.0",
-  "config_flow": true,
-  "iot_class": "cloud_polling"
+  "iot_class": "cloud_polling",
+  "version": "1.0"
 }
