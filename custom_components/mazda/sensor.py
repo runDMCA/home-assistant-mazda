@@ -12,7 +12,7 @@ from homeassistant.components.sensor import (
     SensorStateClass,
 )
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import PERCENTAGE, UnitOfLength, UnitOfPressure
+from homeassistant.const import PERCENTAGE, UnitOfLength, UnitOfPressure, UnitOfTime
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers.entity_platform import AddEntitiesCallback
 from homeassistant.helpers.typing import StateType
@@ -82,6 +82,12 @@ def _ev_charge_level_supported(data):
         and data["evStatus"]["chargeInfo"]["batteryLevelPercentage"] is not None
     )
 
+def _ev_remaining_charging_time_supported(data):
+    """Determine if remaining changing time is supported."""
+    return (
+        data["isElectric"]
+        and data["evStatus"]["chargeInfo"]["basicChargeTimeMinutes"] is not None
+    )
 
 def _ev_remaining_range_supported(data):
     """Determine if remaining range is supported."""
@@ -126,6 +132,9 @@ def _ev_charge_level_value(data):
     """Get the charge level value."""
     return round(data["evStatus"]["chargeInfo"]["batteryLevelPercentage"])
 
+def _ev_remaining_charging_time_value(data):
+    """Get the remaining changing time value."""
+    return round(data["evStatus"]["chargeInfo"]["basicChargeTimeMinutes"])
 
 def _ev_remaining_range_value(data):
     """Get the remaining range value."""
@@ -210,6 +219,15 @@ SENSOR_ENTITIES = [
         state_class=SensorStateClass.MEASUREMENT,
         is_supported=_ev_charge_level_supported,
         value=_ev_charge_level_value,
+    ),
+    MazdaSensorEntityDescription(
+        key="ev_remaining_charging_time",
+        translation_key="ev_remaining_charging_time",
+        device_class=SensorDeviceClass.DURATION,
+        native_unit_of_measurement=UnitOfTime.MINUTES,
+        state_class=SensorStateClass.MEASUREMENT,
+        is_supported=_ev_remaining_charging_time_supported,
+        value=_ev_remaining_charging_time_value,
     ),
     MazdaSensorEntityDescription(
         key="ev_remaining_range",

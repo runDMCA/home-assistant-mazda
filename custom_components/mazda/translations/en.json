@@ -81,6 +81,9 @@
             "ev_charge_level": {
                 "name": "Charge level"
             },
+            "ev_remaining_charging_time": {
+                "name" : "Remaining changing time (AC)"
+            },
             "ev_remaining_range": {
                 "name": "Remaining range"
             },
